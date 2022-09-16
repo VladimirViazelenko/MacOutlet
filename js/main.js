@@ -1,3 +1,4 @@
+const productsModal = document.getElementById("productsModal");
 class ProductService {
     constructor(products = []) {
         this.products = products
@@ -38,9 +39,13 @@ class CartService {
     addToCart(product) {
         const key = product.id
         if (this.cart[key]) {
-            this.cart[key].amount++
+            const amount = this.cart[key].amount;
+            if (amount >= 1 && amount < 4) {
+                this.cart[key].amount++
+            } 
             return
-        } else if (product.orderInfo.inStock === 0) {
+        } 
+        else if (product.orderInfo.inStock === 0) {
             return this.cart[key]
         } 
         
@@ -80,21 +85,14 @@ class CartService {
 
     addCart(productId) {
         const amount = this.cart[productId].amount
-        if (amount >= 1) {
+        if (amount >= 1 && amount < 4) {
             this.cart[productId].amount++
-        } else if (amount > 4) {
-            this.cart[productId]
-        }
+        } 
     }
 
     getCartInfo() {
         const items = Object.keys(this.cart).map(id => {
             return {
-                /* id: id,
-                name: this.cart[id].name,
-                amount: this.cart[id].amount,
-                price: this.cart[id].price,
-                imgUrl: this.cart[id].imgUrl */
                 id,
                 ...this.cart[id]
             }
@@ -127,17 +125,27 @@ class HTMLService {
                 <li><span>Price: $${product.price}</span></li>
                 <li><button class="product_buy" ${product.orderInfo?.inStock === 0?'disabled':''}>Add to cart</button></li>
             </ul>
-            <ul class="products-footer">
-                <li>${product.orderInfo.reviews}% positive reviews</li>
-                <li><span>Above avarage</span>
-                <li><span>500 orders</span></li>
-            </ul>
+            <div class="products-footer">
+                <img class="footer-img-like" src="img/icons/like_filled.svg" alt="Positive reviews">
+                <span class="positive-reviews">
+                    ${product.orderInfo.reviews}% positive reviews
+                    <span>Above avarage</span>
+                </span>
+                <span class="orders">
+                    ${product.orderInfo.orders} orders
+                </span>
+            </div>
         </div>
         `
         newCard.addEventListener('click', () => {
-            productsInfoContainer.innerHTML = htmlService.paintProductsInfo(product)}
-            )
-            
+            productsModal.style.display = "block";
+            const productInfo = productsModal.querySelector('#products_info')
+            productInfo.innerHTML = this.paintProductsInfo(product)
+            const infoBtn = productInfo.querySelector('.product_buy')
+            infoBtn.addEventListener('click', (event) => addToStorage(event, product));
+        })
+        const btn = newCard.querySelector('.product_buy')
+        btn.addEventListener('click', (event) => addToStorage(event, product));
         return newCard
     }
 
@@ -149,19 +157,23 @@ class HTMLService {
             </div>
             <div class="products_info-body">
                 <h2>${product.name}</h2>
-                <div class="products_info-reviews"
-                    <span>${product.orderInfo?.reviews}% Positive reviews</span>
-                    <span>Above avarage</span>
-                    <span>500 orders</span>
+                <div class="products_info-reviews products-footer"
+                    <span class="positive-reviews">
+                        ${product.orderInfo.reviews}% positive reviews
+                        <span>Above avarage</span>
+                    </span>
+                    <span class="orders">
+                        ${product.orderInfo.orders} orders
+                    </span>
                 </div>
-                <p>Color: ${product.color}</p>
-                <p>Operating System: ${product.os}</p>
-                <p>Storage: ${product.storage.toFixed(0)} Gb</p>
-                <p>Chip: ${product.chip?.name}</p>
-                <p>Height: ${product.size?.height} cm</p>
-                <p>Width: ${product.size?.width} cm</p>
-                <p>Depth: ${product.size?.depth} cm</p>
-                <p>Weight: ${product.size?.weight} cm</p>    
+                <p><b>Color: </b>${product.color}</p>
+                <p><b>Operating System: </b>${product.os}</p>
+                <p><b>Storage: </b>${product.storage.toFixed(0)} Gb</p>
+                <p><b>Chip: </b>${product.chip?.name}</p>
+                <p><b>Width: </b>${product.size?.width} cm</p>
+                <p><b>Height: </b>${product.size?.height} cm</p>
+                <p><b>Depth: </b>${product.size?.depth} cm</p>
+                <p><b>Size: </b>${product.size?.weight} cm</p>    
             </div>
             <div class="products_info-footer">
                 <span class="products_info-price">$${product.price}</span>
@@ -218,11 +230,10 @@ class HTMLService {
                     <span>Total price: <strong>$${totalPrice.toFixed(2)}</strong></span>
                 </div>
                 <button class="cart-buy" data-type="buy">Buy</button>
-                <button class="cart-clear" data-type="clear">Clean out</button>
+                <button class="cart-clear" data-type="clear">Clear</button>
             </div>
         `
         }
-        
     }
 }
 
@@ -232,7 +243,7 @@ const htmlService = new HTMLService()
 
 const productsContainer = document.getElementById('products')
 const productsInfoContainer = document.getElementById('products_info')
-const cartContainer = document.getElementById('cart') 
+const cartContainer = document.getElementById('cart')
 const filterInput = document.getElementById('filter') 
 
 filterInput.addEventListener('input', event => {
@@ -241,20 +252,11 @@ filterInput.addEventListener('input', event => {
     renderProducts(filteredProducts)
 })
 
-productsContainer.addEventListener('click', event => {
-    const id = event.target.dataset.id 
-        ? event.target.dataset.id
-        : event.target.closest('div')?.dataset.id
-
-    if (id) {
-        cartService.addToCart(
-            productService.getById(+id)
-        )
-        event.stopPropagation()
-        renderCart()
-    }
-    
-})
+function addToStorage(event, product) {
+    cartService.addToCart(product)
+    renderCart()
+    event.stopPropagation()
+}
 
 cartContainer.addEventListener('click', event => {
     const type = event.target?.dataset.type
@@ -294,11 +296,26 @@ closeButton.addEventListener("click", function() {
   modalOverlay.classList.toggle("closed");
 });
 
+function modalActions() {
+    const productsModal = document.getElementById("productsModal");
+    const modalClose = document.getElementsByClassName("productsModal-close")[0];
 
-function renderProducts(products) {
-    products.map(product => productsContainer.appendChild(htmlService.paintProduct(product)));
+    modalClose.addEventListener("click", function() {
+        productsModal.style.display = "none";
+      });
+      
+    window.addEventListener("click", function(event) {
+        if (event.target == productsModal) {
+          productsModal.style.display = "none";
+        }
+      }); 
 }
 
+function renderProducts(products) {
+    productsContainer.innerHTML = ''
+    products.map(product => productsContainer.appendChild(htmlService.paintProduct(product)));
+    modalActions()
+}
 
 function renderCart() {
     cartContainer.innerHTML = htmlService.paintCart(

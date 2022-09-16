@@ -18,12 +18,54 @@
                 <div class="modal closed" id="modal">
                     <button class="close-button" id="close-button">&times;</button>
                     <div id="cart"></div>
+                    
                 </div>
             </div>
     </header>
     
     <main class="container">
-        <img src="img/banners/iphone_12_banner.jpg" alt="banner-header" class="banner">
+        <div class="super-container">
+            <div class="slide-container">
+              <div class="carousel-container">
+                <div class="myCarousel fade">
+                    <img src="img/banners/iphone_12_banner.jpg" alt="banner-header" class="banner">
+                </div>
+          
+                <div class="myCarousel fade">
+                    <img src="img/banners/apple_tv_banner.png" alt="banner-header" class="banner">
+                    <div class="text">Apple TV</div>
+                </div>
+          
+                <div class="myCarousel fade">
+                    <img src="img/banners/airpods_pro_banner.png" alt="banner-header" class="banner">
+                    <div class="text">AirPods Pro</div>
+                </div>
+    
+                <div class="myCarousel fade">
+                    <img src="img/banners/air_pods_max_banner.jpg" alt="banner-header" class="banner">
+                    <div class="text">AirPods Max</div>
+                </div>
+    
+                <div class="myCarousel fade">
+                    <img src="img/banners/mac_book_banner.jpg" alt="banner-header" class="banner">
+                    <div class="text">Apple MacBook Air</div>
+                </div>
+    
+                <div class="myCarousel fade">
+                    <img src="img/banners/watch_banner.jpg" alt="banner-header" class="banner">
+                    <div class="text">Apple Watch</div>
+                </div>
+    
+                <div class="myCarousel fade">
+                    <img src="img/banners/ipad_air_banner.jpg">
+                    <div class="text">Apple iPad Air</div>
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+              </div>
+              <br>
+            </div>
+        </div>
         <div class="search_сontainer">
             <div class="search">
                 <img src="img/icons/search.svg" class="search-img" alt="search">
@@ -33,11 +75,17 @@
 
         <div class="shop">
             <div class="products" id="products"></div>
-            <div id="products_info" class="products_info"></div>
+            <div id="productsModal" class="productsModal">
+                <div class="productsModal-content">
+                  <span class="productsModal-close">&times;</span>
+                  <div id="products_info" class="products_info"></div>
+                </div>
+            </div>
         </div>
     </main>
     <script src="js/items.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/slider.js"></script>
 </body>
 </html>
 
