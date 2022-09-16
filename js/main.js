@@ -6,8 +6,10 @@ class ProductService {
         this.category = products.category,
         this.color = products.color,
         this.display = products.display,
-        this.orderInfo = products.orderInfo
-
+        this.orderInfo = products.orderInfo,
+        this.size = products.size,
+        this.chip = products.chip,
+        this.os = products.os
     }
     filterBy(search = '') {
         if(!search.trim()) return this.products
@@ -40,7 +42,7 @@ class CartService {
             return
         } else if (product.orderInfo.inStock === 0) {
             return this.cart[key]
-        }
+        } 
         
         this.cart[key] = {
             name: product.name,
@@ -57,7 +59,7 @@ class CartService {
     removeFromCart(productId) {
         const amount = this.cart[productId].amount
         if (amount === 1) {
-            delete this.cart[productId]
+            this.cart[productId]
         } else {
             this.cart[productId].amount--
         }
@@ -76,9 +78,23 @@ class CartService {
         }
     }
 
+    addCart(productId) {
+        const amount = this.cart[productId].amount
+        if (amount >= 1) {
+            this.cart[productId].amount++
+        } else if (amount > 4) {
+            this.cart[productId]
+        }
+    }
+
     getCartInfo() {
         const items = Object.keys(this.cart).map(id => {
             return {
+                /* id: id,
+                name: this.cart[id].name,
+                amount: this.cart[id].amount,
+                price: this.cart[id].price,
+                imgUrl: this.cart[id].imgUrl */
                 id,
                 ...this.cart[id]
             }
@@ -95,19 +111,21 @@ class CartService {
             items, totalPrice, totalAmount
         }
     }
-
 }
 
 class HTMLService {
-    paintProduct(product){
-        return `
-        <div class="products-card" data-id="${product.id}">
+    paintProduct(product){ // карточки
+        const newCard = document.createElement('div')
+        newCard.classList.add('products-card')
+        newCard.classList.add('productsModal-open')
+        newCard.innerHTML = `
+        <div class="products-card-device" data-id="${product.id}">
             <img src="${product.imgUrl}"title="${product.name}"/>
             <ul class="products-body">
                 <li><h2 class="products-title">${product.name}</h2></li>
-                <li><span>${product.orderInfo.inStock} left in stock </span></li>
+                <li><span>${product.orderInfo?.inStock} left in stock </span></li>
                 <li><span>Price: $${product.price}</span></li>
-                <li><button class="product_buy">Add to cart</button></li>
+                <li><button class="product_buy" ${product.orderInfo?.inStock === 0?'disabled':''}>Add to cart</button></li>
             </ul>
             <ul class="products-footer">
                 <li>${product.orderInfo.reviews}% positive reviews</li>
@@ -116,15 +134,45 @@ class HTMLService {
             </ul>
         </div>
         `
+        newCard.addEventListener('click', () => {
+            productsInfoContainer.innerHTML = htmlService.paintProductsInfo(product)}
+            )
+            
+        return newCard
     }
 
-
-    paintProducts(products = []) {
-        return products.map(this.paintProduct).join('')
-       
+    paintProductsInfo(product) { // модалка для карточки
+        return `
+        <div class="products_info-device" data-id="${product.id}">
+            <div class="products_info-header">
+                <img src="${product.imgUrl}"title="${product.name}"/>
+            </div>
+            <div class="products_info-body">
+                <h2>${product.name}</h2>
+                <div class="products_info-reviews"
+                    <span>${product.orderInfo?.reviews}% Positive reviews</span>
+                    <span>Above avarage</span>
+                    <span>500 orders</span>
+                </div>
+                <p>Color: ${product.color}</p>
+                <p>Operating System: ${product.os}</p>
+                <p>Storage: ${product.storage.toFixed(0)} Gb</p>
+                <p>Chip: ${product.chip?.name}</p>
+                <p>Height: ${product.size?.height} cm</p>
+                <p>Width: ${product.size?.width} cm</p>
+                <p>Depth: ${product.size?.depth} cm</p>
+                <p>Weight: ${product.size?.weight} cm</p>    
+            </div>
+            <div class="products_info-footer">
+                <span class="products_info-price">$${product.price}</span>
+                <p>Stock: ${product.orderInfo?.inStock} pcs</p>
+                <button class="product_buy" ${product.orderInfo?.inStock === 0?'disabled':''}>Add to cart</button>
+            </div>
+        </div>
+        `
     }
-
-    paintCartItem(product) {
+    
+    paintCartItem(product) { // корзина
         return `
             <div class="cart-body" data-type="remove" data-id="${product.id}">
                 <img src="${product.imgUrl}" class="cart-image"/>
@@ -153,7 +201,7 @@ class HTMLService {
                 </div>   
             `
         }
-        if (items.length >= 1) {
+        else if (items.length >= 1) {
             return `
             <div class="cart-list" id="cart-list">
                 <div class="cart-title">
@@ -170,7 +218,7 @@ class HTMLService {
                     <span>Total price: <strong>$${totalPrice.toFixed(2)}</strong></span>
                 </div>
                 <button class="cart-buy" data-type="buy">Buy</button>
-                <button class="clear" data-type="clear">Clean out</button>
+                <button class="cart-clear" data-type="clear">Clean out</button>
             </div>
         `
         }
@@ -183,14 +231,13 @@ const cartService = new CartService()
 const htmlService = new HTMLService()
 
 const productsContainer = document.getElementById('products')
+const productsInfoContainer = document.getElementById('products_info')
 const cartContainer = document.getElementById('cart') 
 const filterInput = document.getElementById('filter') 
 
 filterInput.addEventListener('input', event => {
     const value = event.target.value
-
     const filteredProducts = productService.filterBy(value)
-
     renderProducts(filteredProducts)
 })
 
@@ -203,14 +250,15 @@ productsContainer.addEventListener('click', event => {
         cartService.addToCart(
             productService.getById(+id)
         )
+        event.stopPropagation()
         renderCart()
     }
+    
 })
 
 cartContainer.addEventListener('click', event => {
     const type = event.target?.dataset.type
     const id = event.target?.dataset.id
-
     switch (type) {
         case 'clear':
             cartService.clearCart()
@@ -225,14 +273,32 @@ cartContainer.addEventListener('click', event => {
             renderCart()
             break
         case 'addCard':
-            cartService.addToCart()
+            cartService.addCart(id)
             renderCart()
             break
     }
 })
+
+const modal = document.querySelector("#modal");
+const modalOverlay = document.querySelector("#modal-overlay");
+const openButton = document.querySelector("#open-button");
+const closeButton = document.querySelector("#close-button");
+
+openButton.addEventListener("click", function() {
+    modal.classList.toggle("closed");
+    modalOverlay.classList.toggle("closed");
+  });
+
+closeButton.addEventListener("click", function() {
+  modal.classList.toggle("closed");
+  modalOverlay.classList.toggle("closed");
+});
+
+
 function renderProducts(products) {
-    productsContainer.innerHTML = htmlService.paintProducts(products)
+    products.map(product => productsContainer.appendChild(htmlService.paintProduct(product)));
 }
+
 
 function renderCart() {
     cartContainer.innerHTML = htmlService.paintCart(

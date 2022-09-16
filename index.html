@@ -6,26 +6,24 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>MacOutlet</title>
 </head>
 <body>
     <header class="header">
-        <div class="header_container">
-            <div class="logo">
-                <img src="img/logo.png" class="logo" alt="Logo">
-            </div>
+        <img src="img/logo.png" class="logo" alt="Logo">
             <div class="cart">
-                <img class="cart-img" src="img/icons/cart.svg" alt="cart">
-                <div id="cart"></div>
-                
+                <img class="cart-img open-button" src="img/icons/cart.svg" alt="cart" id="open-button" >
+                <div class="modal-overlay closed" id="modal-overlay"></div>
+                <div class="modal closed" id="modal">
+                    <button class="close-button" id="close-button">&times;</button>
+                    <div id="cart"></div>
+                </div>
             </div>
-        </div>
     </header>
     
     <main class="container">
-        <div class="banner-header">
-            <img src="img/banners/iphone_12_banner.jpg" alt="banner-header">
-        </div>
+        <img src="img/banners/iphone_12_banner.jpg" alt="banner-header" class="banner">
         <div class="search_сontainer">
             <div class="search">
                 <img src="img/icons/search.svg" class="search-img" alt="search">
@@ -35,8 +33,8 @@
 
         <div class="shop">
             <div class="products" id="products"></div>
+            <div id="products_info" class="products_info"></div>
         </div>
-        
     </main>
     <script src="js/items.js"></script>
     <script src="js/main.js"></script>
