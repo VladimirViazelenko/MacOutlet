@@ -1,0 +1,33 @@
+{
+  "name": "macoutlet",
+  "version": "1.0.0",
+  "description": "Project MacOutlet",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vviazelenko/MacOutlet.git"
+  },
+  "author": "Volodymyr Viazelenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vviazelenko/MacOutlet/issues"
+  },
+  "homepage": "https://github.com/vviazelenko/MacOutlet#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "csvtojson": "^2.0.10",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.12.0",
+    "mongoose": "^6.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

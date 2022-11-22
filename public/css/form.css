@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+.form-auth-register,
+.form-auth-login {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+.form-login,
+.form-register{
+    width: 562px;
+    min-height: 525px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 0px 112px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.form-title {
+    font-size: 24px;
+    font-weight: 400;
+}
+input{
+    width: 338px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+input[type=submit]{
+    background-color: #5EA9C9;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.form-link {
+    color: black;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/form.css">
+    <title>MacOutlet - Login</title>
+</head>
+<body>
+  <div id="form-auth-login" class="form-auth-login">
+    <form action="http://localhost:3000/auth/login" method="post" id="form-login" class="form-login" name="formLogin">
+    <!-- <form id="form-login" class="form-login" name="formLogin"> -->
+        <h1 class="form-title">Login</h1>
+        <div class="form-name">
+          <label for="username"> Username</label>
+          <input type="text" name="username" id="username" required>
+        </div>
+        <div class="form-password">
+          <label for="password">Password </label>
+          <input type="password" name="password" id="password" required>
+        </div>
+        <div class="form-btn">
+          <input type="submit" value="Log in">
+          <a href="http://localhost:3000/auth/register" class="form-link">Sign up</a>
+        </div>
+    </form>
+  </div>
+  <script src="/js/login.js"></script>
+</body>
+</html>

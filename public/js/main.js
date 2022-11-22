@@ -1,4 +1,14 @@
+fetch('http://localhost:3000/user/products')
+.then((response) => {
+  return response.json();
+})
+.then((items) => {
+  renderProducts(productService.products)
+  console.log(items)
+});
+
 const productsModal = document.getElementById("productsModal");
+
 class ProductService {
     constructor(products = []) {
         this.products = products
@@ -14,7 +24,7 @@ class ProductService {
     }
     filterBy(search = '') {
         if(!search.trim()) return this.products
-    
+        
         return this.products.filter(product => {
             return product.name.toLowerCase().includes(search.toLowerCase())
         })
@@ -122,7 +132,7 @@ class HTMLService {
             <ul class="products-body">
                 <li><h2 class="products-title">${product.name}</h2></li>
                 <li><span>${product.orderInfo?.inStock} left in stock </span></li>
-                <li><span>Price: $${product.price}</span></li>
+                <li><span>Price: <span class="price">${product.price} $</span></span></li>
                 <li><button class="product_buy" ${product.orderInfo?.inStock === 0?'disabled':''}>Add to cart</button></li>
             </ul>
             <div class="products-footer">
@@ -158,26 +168,33 @@ class HTMLService {
             <div class="products_info-body">
                 <h2>${product.name}</h2>
                 <div class="products_info-reviews products-footer"
-                    <span class="positive-reviews">
-                        ${product.orderInfo.reviews}% positive reviews
-                        <span>Above avarage</span>
-                    </span>
-                    <span class="orders">
-                        ${product.orderInfo.orders} orders
-                    </span>
+                    <div class="positive-reviews">
+                        <img class="footer-img-like" src="img/icons/like_filled.svg" alt="Positive reviews">
+                        <span class="positive-reviews">
+                            ${product.orderInfo.reviews}% positive reviews
+                            <span>Above avarage</span>
+                        </span>
+                        <span class="orders">
+                            ${product.orderInfo.orders} orders
+                        </span>
+                    </div>
+                    
+                    <div class="product_info-options">
+                        <p>Color: <span class="options-descr">${product.color}</span></p>
+                        <p>Operating System: <span class="options-descr">${product.os}</span></p>
+                        <p>Storage: <span class="options-descr">${product.storage.toFixed(0)} Gb</span></p>
+                        <p>Chip: <span class="options-descr">${product.chip?.name}</span></p>
+                        <p>Height: <span class="options-descr">${product.size?.height} cm</span></p>
+                        <p>Width: <span class="options-descr">${product.size?.width} cm</span></p>
+                        <p>Depth: <span class="options-descr">${product.size?.depth} cm</span></p>
+                        <p>Weight: <span class="options-descr">${product.size?.weight} g</span></p>    
+                    </div>
                 </div>
-                <p><b>Color: </b>${product.color}</p>
-                <p><b>Operating System: </b>${product.os}</p>
-                <p><b>Storage: </b>${product.storage.toFixed(0)} Gb</p>
-                <p><b>Chip: </b>${product.chip?.name}</p>
-                <p><b>Width: </b>${product.size?.width} cm</p>
-                <p><b>Height: </b>${product.size?.height} cm</p>
-                <p><b>Depth: </b>${product.size?.depth} cm</p>
-                <p><b>Size: </b>${product.size?.weight} cm</p>    
+                
             </div>
             <div class="products_info-footer">
                 <span class="products_info-price">$${product.price}</span>
-                <p>Stock: ${product.orderInfo?.inStock} pcs</p>
+                <p class="products_info-stock">Stock: ${product.orderInfo?.inStock} pcs.</p>
                 <button class="product_buy" ${product.orderInfo?.inStock === 0?'disabled':''}>Add to cart</button>
             </div>
         </div>
@@ -209,8 +226,17 @@ class HTMLService {
                 </div> 
                 <hr />
                 <div id="cart-body">
-                    <p>Cart is empty</p>
-                </div>   
+                    <p class="cart-info">Cart is empty</p>
+                </div>
+                <hr />
+                <div class="cart-footer info">
+                    <span>Total amount: <strong>0 ptc</strong></span>
+                    <span>Total price: <strong>0 $</strong></span>
+                </div>
+                <div class="cart-buttons">
+                    <button class="cart-buy" data-type="buy">Buy</button>
+                </div>
+                
             `
         }
         else if (items.length >= 1) {
@@ -229,8 +255,9 @@ class HTMLService {
                     <span>Total amount: <strong>${totalAmount} ptc</strong></span>
                     <span>Total price: <strong>$${totalPrice.toFixed(2)}</strong></span>
                 </div>
-                <button class="cart-buy" data-type="buy">Buy</button>
-                <button class="cart-clear" data-type="clear">Clear</button>
+                <div class="cart-buttons">
+                    <button class="cart-buy" data-type="buy">Buy</button>
+                </div>
             </div>
         `
         }
@@ -244,7 +271,18 @@ const htmlService = new HTMLService()
 const productsContainer = document.getElementById('products')
 const productsInfoContainer = document.getElementById('products_info')
 const cartContainer = document.getElementById('cart')
+const filterContainer = document.getElementById('filter-container')
+
 const filterInput = document.getElementById('filter') 
+const filterOpen = document.getElementById('filter-open')
+
+filterOpen.addEventListener('click', () => {
+    if (filterContainer.style.display === "block") {
+        filterContainer.style.display = "none";
+    } else {
+        filterContainer.style.display = "block";
+    }
+})
 
 filterInput.addEventListener('input', event => {
     const value = event.target.value
@@ -311,7 +349,22 @@ function modalActions() {
       }); 
 }
 
-function renderProducts(products) {
+const acc = document.getElementsByClassName("accordion"); // Accordion filter (price,color..)
+let i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    const shopFilter = this.nextElementSibling;
+    if (shopFilter.style.display === "block") {
+        shopFilter.style.display = "none";
+    } else {
+        shopFilter.style.display = "block";
+    }
+  });
+}
+
+function renderProducts(products) { 
     productsContainer.innerHTML = ''
     products.map(product => productsContainer.appendChild(htmlService.paintProduct(product)));
     modalActions()
