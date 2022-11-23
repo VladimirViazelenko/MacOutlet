@@ -13,8 +13,8 @@ app.use(express.static('public'))
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 
-app.listen(port, () => {
-  console.log(`Server running http://${host}:${port}/ `);
+app.listen(process.env.PORT || port, host, function () {
+  console.log(`Server listens http://${host}:${port}`);
 });
 
 module.exports = app;
