@@ -1,7 +1,11 @@
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const User = require("../models/user");
-const Product = require("../models/product")
+const Product = require("../models/product");
+const path = require('path');
+
+let token;
+let createToken = require('crypto').randomBytes(64).toString('hex');
 
 class userController {
     async register(req, res) {
@@ -28,7 +32,7 @@ class userController {
           const user = new User({ username, email, password: hashPassword });
           await user.save();
           res.status(200);
-          res.redirect('/auth/login');
+          res.sendFile(path.join(process.cwd() + "/client", "/login.html"));
           console.log("User successfully registered. Please login" )
       } catch (err) {
         console.log(err);
@@ -40,22 +44,22 @@ class userController {
         const {username, password} = req.body;
         const user = await User.findOne({ username });
         if (!user) {
-          return res.status(404).json({message: `User ${username} is not found`})
+          res.status(200)
+          res.sendFile(path.join(process.cwd() + "/client", "/login.html"));
         } else if (user) {
           const validPassword = await bcrypt.compare(password, user.password);
           if (validPassword) {
-            const token = jwt.sign(
+            token = jwt.sign(
               { user_id: user._id, 
-                username: user.username },
-              process.env.TOKEN_KEY,
+                username: user.username }, 
+                createToken,
               {
-                expiresIn: 1800,
+                expiresIn: 3600,
               }
             );
-            user.token = token;
-            console.log("token:", token);
-            res.status(200);
-            res.redirect('/user/main');
+            res.status(200)
+            res.cookie("token", token);
+            res.sendFile(path.join(process.cwd() + "/client", "/index.html"));
             console.log("Valid password. Login successfully completed" )
           } else {
             res.status(400).json({ error: "Invalid password. Check password" });
@@ -63,27 +67,20 @@ class userController {
         } 
       } catch (err) {
         console.log(err);
-        return res.status(400).send("Error login");
+        res.status(400).json("Error login");
       }}
       
-      async users(req, res) {
-        try {
-          const users = await User.find()
-          res.json(users)
-        } catch (error) {
-            console.log(error);
-        }
-      }
-
       async products(req, res) {
         try {
           const products = await Product.find()
-          res.json(products)
+          res.send(products)
         } catch (error) {
             console.log(error)
         }
       } 
-
   }
   
-module.exports = new userController();
+module.exports = {
+  createToken,
+  userController: new userController()
+}

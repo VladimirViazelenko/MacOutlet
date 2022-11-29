@@ -9,11 +9,19 @@ body {
 * {
     box-sizing: border-box;
 }
+.header {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+.logo {
+    margin: 17px 0 12px;
+}
+
 .form-auth-register,
 .form-auth-login {
     display: flex;
     justify-content: center;
-    margin-top: 80px;
+    margin-top: 60px;
 }
 .form-login,
 .form-register{

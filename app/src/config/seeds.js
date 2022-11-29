@@ -43,11 +43,11 @@ exports.connect = () => {
     .catch((err) => console.error("error", err));
 };
 
-const csvData = () => {
+const csvData = [{}]
   
 }
 const seedDB = async () => {
-    await Product.insertMany();
+    await Product.insertMany(csvData);
 }
 seedDB().then(() => {
     mongoose.connection.close()

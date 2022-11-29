@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const config = process.env;
+const {createToken} = require("../controllers/userController");
 
 const verifyToken = (req, res, next) => {
   try {
@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
       return res.status(403).send("A token is required for authentication");
     }
     
-    const decoded = jwt.verify(token, config.TOKEN_KEY);
+    const decoded = jwt.verify(token, createToken);
     req.user = decoded;
   } catch (err) {
     return res.status(401).send("Invalid Token");

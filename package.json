@@ -1,25 +1,26 @@
 {
-  "name": "macoutlet",
+  "name": "macoutletproject",
   "version": "1.0.0",
   "description": "Project MacOutlet",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node ./app/src/index.js",
+    "dev": "nodemon ./app/src/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vviazelenko/MacOutlet.git"
+    "url": "git+https://github.com/vviazelenko/nix_education_Viazelenko.git"
   },
   "author": "Volodymyr Viazelenko",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vviazelenko/MacOutlet/issues"
+    "url": "https://github.com/vviazelenko/nix_education_Viazelenko/issues"
   },
-  "homepage": "https://github.com/vviazelenko/MacOutlet#readme",
+  "homepage": "https://github.com/vviazelenko/nix_education_Viazelenko#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
     "csvtojson": "^2.0.10",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
