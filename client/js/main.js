@@ -1,24 +1,20 @@
-window.history.pushState("object or string", "MacOutlet - Main", "/main");
+window.history.pushState("object or string", "MacOutlet - Main", "/user/main");
+let productService = [];
 (async () => {
     const authToken = await cookieStore.get('token'); 
-    fetch('http://localhost:3000/products', {
+    fetch('http://localhost:3000/user/products', {
     method: 'GET', 
     headers: {
         "x-access-token": authToken.value,
         },
-
 })
 .then((response) => {
   return response.json();
 })
 
 .then((items) => {
-    const productService = []
-    items.forEach((e)=>{
-        let product = new ProductService(e);
-        productService.push(product);
-      })
-      renderProducts(productService)
+      productService = new ProductService(items)
+      renderProducts(productService.products)
 });
 
 const productsModal = document.getElementById("productsModal");
@@ -50,7 +46,6 @@ class ProductService {
         this.size_weight = products.size_weight,
         this.os = products.os,
         this.storage = products.storage
-        
     }
     filterBy(search = '') {
         if(!search.trim()) return this.products
@@ -296,12 +291,10 @@ class HTMLService {
         }
     }
 }
-//const productService = new ProductService(items)
-const cartService = new CartService()
-const htmlService = new HTMLService()
+const cartService = new CartService();
+const htmlService = new HTMLService();
 
 const productsContainer = document.getElementById('products')
-//const productsInfoContainer = document.getElementById('products_info')
 const cartContainer = document.getElementById('cart')
 const filterContainer = document.getElementById('filter-container')
 
@@ -318,7 +311,7 @@ filterOpen.addEventListener('click', () => {
 
 filterInput.addEventListener('input', event => {
     const value = event.target.value
-    const filteredProducts = product.filterBy(value)
+    const filteredProducts = productService.filterBy(value)
     renderProducts(filteredProducts)
 })
 

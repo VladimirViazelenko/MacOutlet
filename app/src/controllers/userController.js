@@ -29,7 +29,7 @@ class userController {
           const salt = await bcrypt.genSalt(10);
           const hashPassword = await bcrypt.hash(password, salt);
 
-          const user = new User({ username, email, password: hashPassword });
+          const user = new User({ username, email: email.toLowerCase(), password: hashPassword });
           await user.save();
           res.status(200);
           res.sendFile(path.join(process.cwd() + "/client", "/login.html"));
@@ -39,6 +39,7 @@ class userController {
         return res.status(400).send("Registration error");
       }
     }
+    
     async login(req, res) {
       try {
         const {username, password} = req.body;
@@ -60,7 +61,7 @@ class userController {
             res.status(200)
             res.cookie("token", token);
             res.sendFile(path.join(process.cwd() + "/client", "/index.html"));
-            console.log("Valid password. Login successfully completed" )
+            console.log("Valid password. Login successfully completed");
           } else {
             res.status(400).json({ error: "Invalid password. Check password" });
           }

@@ -10,7 +10,8 @@ const host = 'localhost';
 const port = process.env.PORT || 3000;
 
 app.use(cookieParser());
-app.use('/', userRoutes);
+app.use(express.json());
+app.use('/user', userRoutes);
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(process.cwd() + "/client", "/login.html"));
