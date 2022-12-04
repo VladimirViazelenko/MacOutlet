@@ -92,106 +92,106 @@
         </div>
 
         <div class="shop">
-            <div class="shop-filter filter_container" id="filter-container">
-                <div class="shopFilter-section">
-                    <div class="accordion shopFilter-title">
+            <div class="filterProducts" id="filterProducts">
+                <div class="filterProducts-section">
+                    <div class="accordion filterProducts-title">
                         <div class="title">Price</div>
                     </div>
-                    <div class="shopFilter shopFilter-price">
-                        <div class="shopFilter-row">
+                    <div class="filterProducts filterProducts-price" id="filterPrice">
+                        <div class="filterProducts-row">
                             <lable>From</lable>
                             <input id="price-from" data-filter="price" data-filter-prop="from" value="0" type="number">
                         </div>
-                        <div class="shopFilter-row">
+                        <div class="filterProducts-row">
                             <lable>To</lable>
                             <input id="price-to" data-filter="price" data-filter-prop="to" type="number">
                         </div>
                     </div>
                 </div>
                 
-                <div class="shopFilter-section">
-                    <div class="accordion shopFilter-title">
+                <div class="filterProducts-section">
+                    <div class="accordion filterProducts-title">
                         <div class="title">Color</div>
                     </div>
-                    <div class="shopFilter shopFilter-color" id="filterColor">
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="Red">Red</span>
-                            <span><input type="checkbox" data-filter="Green">Green</span>
+                    <div class="filterProducts filterProducts-color" id="filterColor">
+                        <div class="filterProducts-row">
+                            <span><input id="color-red" type="checkbox" name="color-Red">Red</span>
+                            <span><input id="color-green" type="checkbox" name="color-Green">Green</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="Black">Black</span>
-                            <span><input type="checkbox" data-filter="Blue">Blue</span>
+                        <div class="filterProducts-row">
+                            <span><input id="color-black" type="checkbox" name="color-Black" value="Black">Black</span>
+                            <span><input id="color-blue" type="checkbox" name="color-Blue">Blue</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="Gold">Gold</span>
-                            <span><input type="checkbox" data-filter="White">White</span>
+                        <div class="filterProducts-row">
+                            <span><input id="color-gold" type="checkbox" name="color-Gold">Gold</span>
+                            <span><input id="color-white" type="checkbox" name="color-White">White</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="Grey">Grey</span>
-                            <span><input type="checkbox" data-filter="Yellow">Yellow</span>
+                        <div class="filterProducts-row">
+                            <span><input id="color-grey" type="checkbox" name="color-Grey">Grey</span>
+                            <span><input id="color-yellow" type="checkbox" name="color-Yellow">Yellow</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="Silver">Silver</span>
-                            <span><input type="checkbox" data-filter="Graphite">Graphite</span>
+                        <div class="filterProducts-row">
+                            <span><input id="color-silver" type="checkbox" name="color-Silver">Silver</span>
+                            <span><input id="color-graphite" type="checkbox" name="color-Graphite">Graphite</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="shopFilter-section">
-                    <div class="accordion shopFilter-title">
+                <div class="filterProducts-section">
+                    <div class="accordion filterProducts-title">
                         <div class="title">Memory</div>
                     </div>
-                    <div class="shopFilter shopFilter-memory">
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="storage" value="32">32 Gb</span>
-                            <span><input type="checkbox" data-filter="storage" value="512">512 Gb</span>
+                    <div class="filterProducts filterProducts-memory" id="filterMemory">
+                        <div class="filterProducts-row">
+                            <span><input id="storage-32" type="checkbox" name="storage-32" value="32">32 Gb</span>
+                            <span><input id="storage-512" type="checkbox" name="storage-512" value="512">512 Gb</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="storage" value="64">64 Gb</span>
-                            <span><input type="checkbox" data-filter="storage" value="1024">1 TB</span>
+                        <div class="filterProducts-row">
+                            <span><input id="storage-64" type="checkbox" name="storage-64" value="64">64 Gb</span>
+                            <span><input id="storage-1024" type="checkbox" name="storage-1024" value="1024">1 TB</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="storage" value="128">128 Gb</span>
-                            <span><input type="checkbox" data-filter="storage" value="2048">2 TB</span>
+                        <div class="filterProducts-row">
+                            <span><input id="storage-128" type="checkbox" name="storage-128" value="128">128 Gb</span>
+                            <span><input id="storage-2048" type="checkbox" name="storage-2048" value="2048">2 TB</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="storage" value="256">256 Gb</span>
-                            <span><input type="checkbox" data-filter="storage" value="4096">4 TB</span>
+                        <div class="filterProducts-row">
+                            <span><input id="storage-256" type="checkbox" name="storage-256" value="256">256 Gb</span>
+                            <span><input id="storage-4096" type="checkbox" name="storage-4096" value="4096">4 TB</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="shopFilter-section">
-                    <div class="accordion shopFilter-title">
+                <div class="filterProducts-section">
+                    <div class="accordion filterProducts-title">
                         <div class="title">OS</div>
                     </div>
-                    <div class="shopFilter shopFilter-os">
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="iOS">iOS</span>
-                            <span><input type="checkbox" data-filter="Mac OS">Mac OS</span>
+                    <div class="filterProducts filterProducts-os" id="filterOS">
+                        <div class="filterProducts-row">
+                            <span><input id="os-iOS" type="checkbox" name="os-IOS">iOS</span>
+                            <span><input id="os-MacOS" type="checkbox" name="os-macOS">Mac OS</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="tvOS">tvOS</span>
-                            <span><input type="checkbox" data-filter="Watch OS">Watch OS</span>
+                        <div class="filterProducts-row">
+                            <span><input id="os-tvOS" type="checkbox" name="os-tvOS">tvOS</span>
+                            <span><input id="os-watchOS" type="checkbox" name="os-watchOS">Watch OS</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="shopFilter-section">
-                    <div class="accordion shopFilter-title">
+                <div class="filterProducts-section">
+                    <div class="accordion filterProducts-title">
                         <div class="title">Display</div>
                     </div>
-                    <div class="shopFilter shopFilter-display">
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="display" value="2-5">2-5 inch</span>
-                            <span><input type="checkbox" data-filter="display" value="5-7">5-7 inch</span>
+                    <div class="filterProducts filterProducts-display" id="filterDisplay">
+                        <div class="filterProducts-row">
+                            <span><input type="checkbox" id="2-5" name="2-5" value="2-5">2-5 inch</span>
+                            <span><input type="checkbox" id="5-7" name="5-7" value="5-7">5-7 inch</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="display" value="7-12">7-12 inch</span>
-                            <span><input type="checkbox" data-filter="display" value="12-16">12-16 inch</span>
+                        <div class="filterProducts-row">
+                            <span><input type="checkbox" id="7-12" name="7-12" value="7-12">7-12 inch</span>
+                            <span><input type="checkbox" id="12-16" name="12-16" value="12-16">12-16 inch</span>
                         </div>
-                        <div class="shopFilter-row">
-                            <span><input type="checkbox" data-filter="display" value="16-1000">+16 inch</span>
+                        <div class="filterProducts-row">
+                            <span><input type="checkbox" id="16+" name="16+" value="16-100">+16 inch</span>
                         </div>
                     </div>
                 </div>

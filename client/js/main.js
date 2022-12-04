@@ -2,7 +2,7 @@ window.history.pushState("object or string", "MacOutlet - Main", "/user/main");
 let productService = [];
 (async () => {
     const authToken = await cookieStore.get('token'); 
-    fetch('http://localhost:3000/user/products', {
+    fetch('https://macoutletshop.netlify.app/user/products', {
     method: 'GET', 
     headers: {
         "x-access-token": authToken.value,
@@ -296,7 +296,7 @@ const htmlService = new HTMLService();
 
 const productsContainer = document.getElementById('products')
 const cartContainer = document.getElementById('cart')
-const filterContainer = document.getElementById('filter-container')
+const filterContainer = document.getElementById('filterProducts')
 
 const filterInput = document.getElementById('filter') 
 const filterOpen = document.getElementById('filter-open')

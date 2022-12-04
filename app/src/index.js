@@ -12,6 +12,9 @@ const port = process.env.PORT || 3000;
 app.use(cookieParser());
 app.use(express.json());
 app.use('/user', userRoutes);
+app.use("/css", express.static(process.cwd() + "/client/css"));
+app.use("/js", express.static(process.cwd() + "/client/js"));
+app.use("/img", express.static(process.cwd() + "/client/img"));
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(process.cwd() + "/client", "/login.html"));
