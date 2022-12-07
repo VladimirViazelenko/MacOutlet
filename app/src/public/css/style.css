@@ -437,7 +437,6 @@ body{
 /* -------Filter------------ */
 
 .filterProducts {
-    padding: 0 18px;
     display: none;
     overflow: hidden;
     min-width: 320px;

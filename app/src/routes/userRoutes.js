@@ -5,14 +5,14 @@ const bodyParser = require('body-parser');
 const verifyToken = require("../middleware/auth");
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-const login = process.cwd() + "/client/login.html";
-const register = process.cwd() + "/client/register.html";
-const main = process.cwd() + "/client/index.html";
+const login = process.cwd() + "/app/src/views/login.html";
+const register = process.cwd() + "/app/src/views/register.html";
+const main = process.cwd() + "/app/src/views/index.html";
 
 userRouter.use(express.json());
-userRouter.use("/css", express.static(process.cwd() + "/client/css"));
-userRouter.use("/js", express.static(process.cwd() + "/client/js"));
-userRouter.use("/img", express.static(process.cwd() + "/client/img"));
+userRouter.use("/css", express.static(process.cwd() + "/app/src/public/css"));
+userRouter.use("/js", express.static(process.cwd() + "/app/src/public/js"));
+userRouter.use("/img", express.static(process.cwd() + "/app/src/public/img"));
 
 userRouter.get("/register", function (req, res) {
   res.sendFile(register);
