@@ -436,11 +436,31 @@ body{
 
 /* -------Filter------------ */
 
-.filterProducts {
+.shopFilter {
+    padding: 0 18px;
+    background-color: white;
     display: none;
     overflow: hidden;
+}
+
+.shopFilterContainer {
+    width: 320px;
+}
+
+.shopFilter span {
+    display: flex;
+}
+
+.shopFilter-price input {
+    width: 190px;
+    height: 39px;
+    outline: none;
+}
+
+.shop-filter {
     min-width: 320px;
     height: 100%;
+    display: none;
     align-content: flex-start;
     background: #FFFFFF;
     border: 1px solid #E0E0E0;
@@ -450,25 +470,11 @@ body{
     margin-right: 50px;
 }
 
-.filterProductsContainer {
-    width: 320px;
-}
-
-.filterProducts span {
-    display: flex;
-}
-
-.filterProducts-price input {
-    width: 190px;
-    height: 39px;
-    outline: none;
-}
-
-.filterProducts-section {
+.shopFilter-section {
     border-bottom: 1px solid #E0E0E0;
     width: 100%;
 }
-.filterProducts-row {
+.shopFilter-row {
     height: 40px;
     margin: 10px 0;
     display: flex;
@@ -478,18 +484,18 @@ body{
     color: black;
 }
 
-.filterProducts-row>span>input {
+.shopFilter-row>span>input {
     margin-right: 15px;
 }
 
-.filterProducts-row>span {
+.shopFilter-row>span {
     width: 40%;
 }
-.filterProducts-row>lable {
+.shopFilter-row>lable {
     width: 30%
 }
 
-.filterProducts-row>input {
+.shopFilter-row>input {
     width: 65%;
     text-align: center;
     font-style: normal;
@@ -501,7 +507,7 @@ body{
     border-radius: 5px;
 }
 
-.filterProducts-row-col1 {
+.shopFilter-row-col1 {
     height: 40px;
     margin: 10px 0;
     width: 130px;
