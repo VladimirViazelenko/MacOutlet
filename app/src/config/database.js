@@ -7,3 +7,4 @@ exports.connect = () => {
     .catch((err) => console.error("error", err));
 };
 
+mongoose.set('strictQuery', true);
