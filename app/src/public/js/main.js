@@ -1,5 +1,5 @@
-window.history.pushState("object or string", "MacOutlet - Main", "/user/main");
 let productService = [];
+
 (async () => {
     const authToken = await cookieStore.get('token'); 
     fetch('http://localhost:3000/user/products', {
